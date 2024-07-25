@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <h1>Admin Page</h1>
+  <a href="/">go to home page ></a>
+  <form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="image" required>
+    <textarea name="text" placeholder="Enter text" required></textarea>
+    <button type="submit">Upload</button>
+  </form>
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(this);
+      
+      fetch('/upload', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(result => {
+        if (result.success) {
+          alert('Upload successful!');
+        } else {
+          alert('Upload failed.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
